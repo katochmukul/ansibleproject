@@ -1,0 +1,11 @@
+all-test:vars]
+ansible_connection=ssh
+ansible_user=root
+ansible_ssh_pass=smartvm
+
+[all-test]
+10.1.42.104
+10.1.42.105
+
+[local-host]
+127.0.0.1 ansible_connection=local

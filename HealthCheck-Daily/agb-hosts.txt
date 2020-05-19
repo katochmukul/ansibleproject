@@ -1,0 +1,4 @@
+[all]
+10.1.42.105 ansible_connection=ssh ansible_user=root ansible_ssh_pass=smartvm ansible_application=SAP_production ansible_business=Acrylic_Fibre
+10.1.42.106 ansible_connection=ssh ansible_user=root ansible_ssh_pass=smartvm ansible_application=SAP_production ansible_business=Acrylic_Fibre
+10.1.42.106 ansible_connection=ssh ansible_user=root ansible_ssh_pass=smartvm ansible_application=SAP_production ansible_business=Acrylic_Fibre

@@ -1,0 +1,31 @@
+sudo awx-manage  inventory_import --inventory-name DailyInventory  --source hosts
+
+awx-manage  inventory_import --inventory-name DailyInventory  --source hosts --overwrite
+
+--proxy="http://username:password@proxy.com:80"
+
+pip install virtualenv
+
+virtualenv venv
+source venv/bin/activate
+
+firewall-cmd --list-ports
+
+-Upload excel sheet and update inventory through python program
+-Password should be encrypted and decrypted with Base 64
+-Execute cluster commands with the given user name and password
+-Update HTML report as per client suggestions for cosmetic changes
+-Mukul to get back for end to end demo date with all above points covered..
+url
+https://docs.ansible.com/ansible-tower/latest/html/administration/tower-manage.html
+
+Service creation in python uwsgi app
+
+create app.ini
+create /etc/systemd/system/uwsgi.service
+create run/uwsgi/app.sock
+
+for smtp
+2 level auth in google
+allow authentication from app 
+generate password

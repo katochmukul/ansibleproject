@@ -1,0 +1,51 @@
+[all]
+10.1.42.105 ansible_connection=ssh ansible_user=root ansible_ssh_pass=smartvm ansible_application=SAP_production ansible_business=Acrylic_Fibre
+10.1.42.106 ansible_connection=ssh ansible_user=root ansible_ssh_pass=smartvm ansible_application=SAP_production ansible_business=Acrylic_Fibre
+
+[cluster]
+10.1.42.104 ansible_connection=ssh ansible_user=root ansible_ssh_pass=smartvm ansible_application=IAM_production ansible_business=Thai_Chemicals
+
+
+
+
+- hosts: cluster
+  gather_facts: True
+  roles:
+    - fetch_server_details
+  vars_files:
+    - extra_vars.yml
+
+
+- name: Check Cluster
+  shell: uname
+  when: cluster_state == "true"
+  register: cluster_uname
+
+
+- name: Check Cluster
+  tasks:
+  - shell: uname
+    register: cluster_true
+    when: cluster_state == "true"
+  - shell: uname
+    register: Cluster_false
+    when: cluster_state == "false"
+
+    uptime -p | sed  's/,//g'
+
+
+    {% for host in groups['all'] %}
+            <tr>
+                <td>{{ hostvars[host].hostname_value.stdout }}</td>
+                <td>{{ hostvars[host].hostname_value.stdout }}</td>
+                <td>{{ hostvars[host].os_version_value.stdout }}</td>
+                <td>{{ hostvars[host].uptime_value.stdout }}</td>
+                <td>{{ hostvars[host].load_average_value.stdout }}</td>
+                <td>{{ hostvars[host].ansible_application }}</td>
+                <td>{{ hostvars[host].ansible_business}}</td>
+                {% if cluster_state == true %}
+                    <td>{{ hostvars[host].cluster_true.stdout }}</td>
+                {% endif %}
+
+            </tr>    
+            {% endfor %}

@@ -1,0 +1,251 @@
+<html>
+<head>
+    <title>Linux Server Health check report</title>
+    <link rel="stylesheet" href="
+    https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+    <h4>Report generated st: <i>{{now() }} </i></h4>
+    <h2>Standard health Checks: </h2>
+
+    <h3>Host details</h3>
+
+        <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Host</th>
+            <th>Hostname</th>
+            <th>OS Version</th>
+            <th>Uptime</th>
+            <th>Load average</th>
+            <th>Application</th>
+            <th>Business</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for host in groups['all'] %}
+            <tr>
+                <td>{{ hostvars[host].hostname_value.stdout }}</td>
+                <td>{{ hostvars[host].hostname_value.stdout }}</td>
+                <td>{{ hostvars[host].os_version_value.stdout }}</td>
+                <td>{{ hostvars[host].uptime_value.stdout }}</td>
+                <td>{{ hostvars[host].load_average_value.stdout }}</td>
+                <td>{{ hostvars[host].ansible_application }}</td>
+                <td>{{ hostvars[host].ansible_business}}</td>
+
+            </tr>    
+            {% endfor %}
+
+        
+        
+        </tbody>
+        </table>
+    
+    <h3>CPU and Memory Utilization details:</h3>
+
+        <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Host</th>
+            <th>CPU Percentage</th>
+            <th>Memory Percentage</th>
+            <th>Top CPU utilizing process</th>
+            <th>Top Memory utilizing process</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for host in groups['all'] %}
+            <tr>
+                <td>{{ hostvars[host].hostname_value.stdout }}</td>
+                <td {% if hostvars[host].cpu_percentage_critical == true -%} class="danger" {% elif hostvars[host].cpu_percentage_warning == true -%}  class="warning" {% else -%} class="success" {%- endif %}
+            >{{ hostvars[host].cpu_percentage_value.stdout }} %</td>
+                <td {% if hostvars[host].memory_percentage_critical == true -%} class="danger" {% elif hostvars[host].memory_percentage_warning == true -%}  class="warning" {% else -%} class="success" {%- endif %}
+            >{{ hostvars[host].memory_percentage_value.stdout }} %</td>
+                <td style="white-space: pre-line">{{ hostvars[host].top_cpu_process_values.stdout }}</td>
+                <td style="white-space: pre-line">{{ hostvars[host].top_memory_process_values.stdout }}</td>
+
+            </tr>    
+            {% endfor %}
+
+        
+        
+        </tbody>
+        </table>
+
+    <h3>File system details:</h3>
+
+        <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Host</th>
+                <th>IO Status</th>
+                <th>File system utilization</th>
+                <th>Read only filesystem</th>
+                <th>NFS file system status</th>
+                <th>No. of open files</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for host in groups['all'] %}
+                <tr>
+                    <td>{{ hostvars[host].hostname_value.stdout }}</td>
+                    <td>{{ hostvars[host].io_status_values.stdout }}</td>
+                    <td {% if hostvars[host].file_system_utilization_critical == true -%} class="danger" {% elif hostvars[host].file_system_utilization_warning == true -%}  class="warning" {% else -%} class="success" {%- endif %}
+                    >{{ hostvars[host].file_system_utilization_value.stdout }}</td>
+                    <td {% if hostvars[host].read_only_count_value.stdout == "0" -%} class="success" {% else -%}  class="danger" {%- endif %}
+                    >{% if hostvars[host].read_only_count_value.stdout == "0" -%} No {% else -%}  Yes {%- endif %}</td>
+                    <td {% if hostvars[host].nfs_mount_status_value.stdout == "1" -%} class="success" {% else -%}  class="danger" {%- endif %}
+                    >{{ hostvars[host].nfs_mount_status_value.stdout }}</td>
+                    <td>{{ hostvars[host].open_files_value.stdout }}</td>
+    
+                </tr>    
+                {% endfor %}        
+            
+        </tbody>
+        </table>
+        <h3>OS Level Critical Services:</h3>
+
+        <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Host</th>
+                <th>ntpd</th>
+                <th>rsyslogd</th>
+                <th>crond</th>
+                <th>sshd</th>
+                <th>nfs</th>
+                <th>network</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for host in groups['all'] %}
+                <tr>
+                    <td>{{ hostvars[host].hostname_value.stdout }}</td>
+                    <td>{{ hostvars[host].ntpd_service.stdout }}</td>
+                    <td>{{ hostvars[host].rsyslogd_service.stdout }}</td>
+                    <td>{{ hostvars[host].crond_service.stdout }}</td>
+                    <td>{{ hostvars[host].sshd_service.stdout }}</td>
+                    <td>{{ hostvars[host].nfs_service.stdout }}</td>
+                    <td>{{ hostvars[host].network_service.stdout }}</td>
+                
+    
+                </tr>    
+                {% endfor %}        
+            
+        </tbody>
+        </table>
+
+
+    <h3>Cluster details</h3>
+
+        <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Host</th>
+            <th>Hostname</th>
+            <th>OS Version</th>
+            <th>Uptime</th>
+            <th>Load average</th>
+            <th>Application</th>
+            <th>Business</th>
+            <th>Uname</th>
+            <th>Test</th>
+    
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for host in groups['all'] %}
+            <tr>
+                <td>{{ hostvars[host].hostname_value.stdout }}</td>
+                <td>{{ hostvars[host].hostname_value.stdout }}</td>
+                <td>{{ hostvars[host].os_version_value.stdout }}</td>
+                <td>{{ hostvars[host].uptime_value.stdout }}</td>
+                <td>{{ hostvars[host].load_average_value.stdout }}</td>
+                <td>{{ hostvars[host].ansible_application }}</td>
+                <td>{{ hostvars[host].ansible_business}}</td>
+                <td>{{ hostvars[host].cluster_true.stdout }}</td>
+                <td> 3 </td>
+
+            </tr>    
+            {% endfor %}
+
+        
+        
+        </tbody>
+        </table>
+
+    <h3>Summary Table</h3>
+
+        <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Host Name</th>
+            <th>Critical Count</th>
+            <th>Warning Count</th>
+            <th>Normal Count</th>
+            <th>Error</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for host in groups['all'] %}
+            <tr>
+                <td>{{ hostvars[host].hostname_value.stdout }}</td>
+                <td>{% if (hostvars[host].cpu_percentage_value.stdout >= "85") and (hostvars[host].memory_percentage_value.stdout >= "85") and (hostvars[host].file_system_utilization_value.stdout >= "85") -%} 3
+                {% elif (hostvars[host].cpu_percentage_value.stdout >= "85") and (hostvars[host].memory_percentage_value.stdout >= "85") and (hostvars[host].file_system_utilization_value.stdout < "85") -%} 2
+                {% elif (hostvars[host].cpu_percentage_value.stdout >= "85") and (hostvars[host].memory_percentage_value.stdout < "85") and (hostvars[host].file_system_utilization_value.stdout >= "85") -%} 2
+                {% elif (hostvars[host].cpu_percentage_value.stdout < "85") and (hostvars[host].memory_percentage_value.stdout >= "85") and (hostvars[host].file_system_utilization_value.stdout >= "85") -%} 2
+                {% elif (hostvars[host].cpu_percentage_value.stdout < "85") and (hostvars[host].memory_percentage_value.stdout < "85") and (hostvars[host].file_system_utilization_value.stdout >= "85") -%} 1
+                {% elif (hostvars[host].cpu_percentage_value.stdout >= "85") and (hostvars[host].memory_percentage_value.stdout < "85") and (hostvars[host].file_system_utilization_value.stdout < "85") -%} 1
+                {% elif (hostvars[host].cpu_percentage_value.stdout < "85") and (hostvars[host].memory_percentage_value.stdout >= "85") and (hostvars[host].file_system_utilization_value.stdout < "85") -%} 1
+                {% elif (hostvars[host].cpu_percentage_value.stdout < "85") and (hostvars[host].memory_percentage_value.stdout < "85") and (hostvars[host].file_system_utilization_value.stdout < "85") -%} 0
+                {% else -%} Error {%- endif %}</td>
+                
+                <td>{% if (hostvars[host].cpu_percentage_value.stdout < "85" and hostvars[host].cpu_percentage_value.stdout >= "75") and (hostvars[host].memory_percentage_value.stdout < "85" and hostvars[host].memory_percentage_value.stdout >= "75") and (hostvars[host].file_system_utilization_value.stdout < "85" and hostvars[host].file_system_utilization_value.stdout >= "75") -%} 3
+
+                {% elif ((hostvars[host].cpu_percentage_value.stdout < "85" and hostvars[host].cpu_percentage_value.stdout >= "75") and (hostvars[host].file_system_utilization_value.stdout < "85" and hostvars[host].file_system_utilization_value.stdout >= "75")) or ((hostvars[host].memory_percentage_value.stdout < "85" and hostvars[host].memory_percentage_value.stdout >= "75") and (hostvars[host].file_system_utilization_value.stdout < "85" and hostvars[host].file_system_utilization_value.stdout >= "75")) or ((hostvars[host].cpu_percentage_value.stdout < "85" and hostvars[host].cpu_percentage_value.stdout >= "75") and (hostvars[host].memory_percentage_value.stdout < "85" and hostvars[host].memory_percentage_value.stdout >= "75")) -%} 2
+
+                {% elif ((hostvars[host].cpu_percentage_value.stdout < "85" and hostvars[host].cpu_percentage_value.stdout >= "75")) or ((hostvars[host].memory_percentage_value.stdout < "85" and hostvars[host].memory_percentage_value.stdout >= "75")) or ((hostvars[host].file_system_utilization_value.stdout < "85" and hostvars[host].file_system_utilization_value.stdout >= "75")) -%} 1
+
+                {% elif ((hostvars[host].cpu_percentage_value.stdout >= "85" )) or ((hostvars[host].memory_percentage_value.stdout >= "85" )) or ((hostvars[host].file_system_utilization_value.stdout >= "85" )) -%} 0
+
+                {% elif ((hostvars[host].cpu_percentage_value.stdout < "75" )) or ((hostvars[host].memory_percentage_value.stdout < "75" )) or ((hostvars[host].file_system_utilization_value.stdout < "75" )) -%} 0
+
+                {% else -%} Error {%- endif %}</td>
+
+                <td>{% if (hostvars[host].cpu_percentage_value.stdout < "75") and (hostvars[host].memory_percentage_value.stdout < "75") and (hostvars[host].file_system_utilization_value.stdout < "75") -%} 3
+
+                {% elif ((hostvars[host].cpu_percentage_value.stdout < "75" ) and (hostvars[host].file_system_utilization_value.stdout < "75" )) or ((hostvars[host].memory_percentage_value.stdout < "75") and (hostvars[host].file_system_utilization_value.stdout < "75")) or ((hostvars[host].cpu_percentage_value.stdout < "75") and (hostvars[host].memory_percentage_value.stdout < "75")) -%} 2
+
+                {% elif (hostvars[host].cpu_percentage_value.stdout < "75") or (hostvars[host].memory_percentage_value.stdout < "75") or (hostvars[host].file_system_utilization_value.stdout < "75") -%} 1
+
+                {% elif ((hostvars[host].cpu_percentage_value.stdout >= "75" )) or ((hostvars[host].memory_percentage_value.stdout >= "75" )) or ((hostvars[host].file_system_utilization_value.stdout >= "75" )) -%} 0
+
+                {% else -%} Error {%- endif %}</td>
+
+            </tr>    
+            {% endfor %}
+
+        
+        
+        </tbody>
+        </table>
+
+
+    </div>
+
+</body>
+
+</html>

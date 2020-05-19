@@ -1,0 +1,4 @@
+
+[all]
+127.0.0.1 ansible_connection=local ansible_application=SAP_production ansible_business=Acrylic_Fibre ansible_cluster=true
+

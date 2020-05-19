@@ -1,0 +1,3 @@
+afciprd,10.1.80.15,ssh,root,password,SAP_production,Acrylic_Fibre_&_Spinning,No
+afdbprd,10.1.80.16,ssh,root,password,SAP_production,Acrylic_Fibre_&_Spinning,No
+ABDB-node2,10.1.80.93/10.1.80.94,ssh,root,password,SAP_production,Thai_Chemicals,Yes

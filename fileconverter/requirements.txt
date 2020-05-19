@@ -1,0 +1,6 @@
+xlrd
+flask
+werkzeug
+uwsgi
+## python2
+# configparser

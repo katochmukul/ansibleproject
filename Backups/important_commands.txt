@@ -1,0 +1,29 @@
+subscription-manager config --server.proxy_hostname=http://IP --server.proxy_port=80 --server.proxy_user=username --server.proxy_password=password
+
+
+subscription-manager repos --enable "rhel-7-server-optional-rpms" --enable "rhel-7-server-extras-rpms"  --enable "rhel-ha-for-rhel-7-server-rpms"
+
+
+------Installing pip using proxy----------
+#curl -k -x --proxy=http://username:Password@Ip/ https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+#python get-pip.py --proxy=http://username:Password@Ip/
+#virtualenv venv
+#source venv/bin/activate
+#pip install -r requirements.txt --proxy=http://username:Password@Ip/
+
+
+check proxy settings 
+yum.conf   yum.repos.d ,  rhsm.conf, dnf, /etc/environment
+
+yum clean all
+
+-------Allowing ports and services in firewall---------
+
+#firewall-cmd --permanent --add-port=100/tcp
+#firewall-cmd --reload
+#firewall-cmd --list-ports
+#firewall-cmd --permanent --add-service=http
+#firewall-cmd --reload
+#firewall-cmd --list-services
+
+sudo systemctl restart network-manager

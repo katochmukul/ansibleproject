@@ -1,0 +1,17 @@
+---
+print_all_values: "true"
+generate_csv_report: "true"
+
+#Threshold Values : Warning
+cpu_threshold_warning: 75
+memory_threshold_warning: 75
+file_system_utilization_threshold_warning: 75
+
+
+#Threshold Values : Critical
+cpu_threshold_critical: 85
+memory_threshold_critical: 85
+file_system_utilization_threshold_critical: 85
+
+#Cluster Values
+cluster_state: "{{ ansible_cluster }}"

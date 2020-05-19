@@ -1,0 +1,5 @@
+Host;HostName;OS-Version;Uptime;Load-Average;CPU-Percentage;Memory-Percentage;IO-Status;File-System-Utilization;Read-Only-FileSystem;NFS-Status;Number-of-Open-Files;Application-Name;Business;ntpd-service;rysylogd-service;crond-service;sshd-service;nfs-service;network-service
+{% for host in groups['all'] %}
+{% set vars = hostvars[host|string] %}
+{{ vars.hostname_value.stdout }};{{ vars.hostname_value.stdout }};{{ vars.os_version_value.stdout }},{{ vars.uptime_value.stdout }},{{ vars.load_average_value.stdout }};{{ vars.cpu_percentage_value.stdout }};{{ vars.memory_percentage_value.stdout }};{{ vars.io_status_values.stdout }};{{ vars.file_system_utilization_value.stdout }};{{ vars.read_only_count_value.stdout }};{{ vars.nfs_mount_status_value.stdout }};{{ vars.open_files_value.stdout }};{{ vars.ansible_application }};{{ vars.ansible_business  }};{{ vars.ntpd_service.stdout }};{{ vars.rsyslogd_service.stdout }};{{ vars.crond_service.stdout }};{{ vars.sshd_service.stdout }};{{ vars.nfs_service.stdout }};{{ vars.network_service.stdout }}
+{% endfor %}

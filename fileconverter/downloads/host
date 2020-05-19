@@ -1,0 +1,13 @@
+[non-cluster]
+10.1.80.15 ansible_host_name=afciprd ansible_connection=ssh ansible_user=root ansible_ssh_pass=password ansible_application=SAP_production ansible_business=Acrylic_Fibre_&_Spinningansible_cluster=false
+10.1.80.16 ansible_host_name=afdbprd ansible_connection=ssh ansible_user=root ansible_ssh_pass=password ansible_application=SAP_production ansible_business=Acrylic_Fibre_&_Spinningansible_cluster=false
+
+[cluster]
+10.1.80.93 ansible_host_name=ABDB-node2 ansible_connection=ssh ansible_user=root ansible_ssh_pass=password ansible_application=SAP_production ansible_business=Thai_Chemicalsansible_cluster=true
+10.1.80.94 ansible_host_name=ABDB-node2 ansible_connection=ssh ansible_user=root ansible_ssh_pass=password ansible_application=SAP_production ansible_business=Thai_Chemicalsansible_cluster=true
+
+[cluster:vars]
+ansible_cluster=true
+
+[non-cluster:vars]
+ansible_cluster=false
