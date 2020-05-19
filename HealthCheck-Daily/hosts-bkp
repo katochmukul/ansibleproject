@@ -1,7 +1,7 @@
 all-test:vars]
 ansible_connection=ssh
 ansible_user=root
-ansible_ssh_pass=smartvm
+ansible_ssh_pass=passwd
 
 [all-test]
 10.1.42.104
