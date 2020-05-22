@@ -175,7 +175,7 @@
     secure: starttls
     charset: utf-8
     username: mukul.katoch100@gmail.com
-    password: pynsnfedxzjqhann
+    password: psswd
     to: 
     - Mukul Katoch <mukul.katoch@opcito.com>
     subject: Ansible-report
